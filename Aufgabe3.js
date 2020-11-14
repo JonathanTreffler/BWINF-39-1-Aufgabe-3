@@ -1,11 +1,11 @@
 DatasystemHandler = require("./DatasystemHandler.js");
-Match = require("./Match.js");
+Competition = require("./Competition.js");
 
-var spielstaerkenId = 2;
+var spielstaerkenId = 3;
 
 DatasystemHandler.readPlayersFile(spielstaerkenId).then(function(players){
     console.log(players);
 
-    new Match(players[0], players[1]);
+    new Competition.LigaCompetition(players);
 });
 
