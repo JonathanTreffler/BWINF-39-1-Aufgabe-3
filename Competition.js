@@ -57,8 +57,78 @@ class LigaCompetition {
             
         });
         console.log(sortedPlayerWins);
-        console.log("The Winner is player "+ sortedPlayerWins[0][0] + " with " + sortedPlayerWins[0][1] + " won matches");
+        console.log("Der Gewinner ist Spieler "+ sortedPlayerWins[0][0] + " mit " + sortedPlayerWins[0][1] + " gewonnenen Spielen");
     }
 }
 
-module.exports = { LigaCompetition };
+class KOCompetition {
+    constructor(players, CompetitionPlan) {
+        this.players = players;
+        this.CompetitionPlan = CompetitionPlan;
+
+        this.run();
+    }
+    run() {
+        console.log(this.players);
+
+        if(this.CompetitionPlan === "random") {
+            this.randomPlan();
+        }
+
+        console.log(this.players);
+
+        this.round(this.players, 1);
+    }
+    randomPlan() {
+        /* Randomize array in-place using Durstenfeld shuffle algorithm */
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        // shuffle players
+        shuffleArray(this.players);
+    }
+    round(players, roundNumber) {
+        console.log("\n START RUNDE ", roundNumber);
+        console.log("Teilnehmer der Runde:");
+        console.log(players);
+
+        let playersWonInThisRound = [];
+
+        for(let i = 0; i < players.length; i = i+2) {
+            
+            let player1 = players[i];
+            let player2 = players[i+1];
+
+            let match = new Match(player1, player2);
+            let matchResult = match.run();
+
+            console.log("Spieler ", player1.id, " gegen ", player2.id);
+
+            if(matchResult == 1) {
+                playersWonInThisRound.push(player1);
+                console.log("   ==> Spieler ", player1.id, " gewinnt \n");
+            } else if (matchResult == 2) {
+                playersWonInThisRound.push(player2);
+                console.log("   ==> Spieler ", player2.id, " gewinnt \n");
+            }
+        }
+
+        console.log("Gewinner dieser Runde:")
+        console.log(playersWonInThisRound);
+
+        if(playersWonInThisRound.length === 1) {
+            console.log("Gesammtgewinner ist Spieler ", playersWonInThisRound[0].id);
+        } else {
+            // recursively run next round
+            this.round(playersWonInThisRound, roundNumber+1);
+        }
+    }
+}
+
+module.exports = { LigaCompetition, KOCompetition };

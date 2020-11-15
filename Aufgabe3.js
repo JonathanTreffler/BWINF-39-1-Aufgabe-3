@@ -6,6 +6,7 @@ var spielstaerkenId = 3;
 DatasystemHandler.readPlayersFile(spielstaerkenId).then(function(players){
     console.log(players);
 
-    new Competition.LigaCompetition(players);
+    //new Competition.LigaCompetition(players);
+    new Competition.KOCompetition(players, "random");
 });
 
