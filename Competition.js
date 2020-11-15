@@ -25,10 +25,10 @@ class LigaCompetition {
                 
                 console.log(player1.id + " gegen " + player2.id);
 
-                let match = new Match(player1, player2);
+                let match = new Match.DefaultMatch(player1, player2);
                 let matchResult = match.run();
 
-                this.playerWins.set(matchResult.id, this.playerWins.get(matchResult.id) + 1);
+                this.playerWins.set(matchResult.winner.id, this.playerWins.get(matchResult.winner.id) + 1);
             }
         }
         console.log(this.playerWins);
@@ -60,9 +60,10 @@ class LigaCompetition {
 }
 
 class KOCompetition {
-    constructor(players, CompetitionPlan) {
+    constructor(players, CompetitionPlan, roundsPerMatch) {
         this.players = players;
         this.CompetitionPlan = CompetitionPlan;
+        this.roundsPerMatch = parseInt(roundsPerMatch) || 1;
 
         this.run();
     }
@@ -92,13 +93,13 @@ class KOCompetition {
             let player1 = players[i];
             let player2 = players[i+1];
 
-            let match = new Match(player1, player2);
+            let match = new Match.MatchMultipleRounds(player1, player2, this.roundsPerMatch);
             let matchResult = match.run();
 
             console.log("Spieler ", player1.id, " gegen ", player2.id);
 
-            WinnersInThisRound.push(matchResult);
-            console.log("   ==> Spieler ", matchResult.id, " gewinnt \n");
+            WinnersInThisRound.push(matchResult.winner);
+            console.log("   ==> Spieler ", matchResult.winner.id, " gewinnt (", matchResult.wins, " von ", this.roundsPerMatch, " = ", matchResult.winRatio*100, "% Spiele gewonnen ) \n");
         }
 
         console.log("Gewinner dieser Runde:")
