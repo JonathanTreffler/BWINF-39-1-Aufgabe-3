@@ -4,7 +4,7 @@ Player = require("./Player.js");
 
 function readPlayersFile(id) {
     return new Promise(function(resolve, reject) {
-        fs.readFile('data/spielstaerken' + id + ".txt", 'utf8', function (err,data) {
+        fs.readFile('../data/spielstaerken' + id + ".txt", 'utf8', function (err,data) {
             if (err) {
                 reject(err);
             }
