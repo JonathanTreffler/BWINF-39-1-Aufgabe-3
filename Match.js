@@ -14,11 +14,11 @@ class Match {
         if(randomNumber <= this.player1.strength) {
             this.winner = this.player1;
             //console.log("Winner is Player with id "+ this.player1.id);
-            return 1;
+            return this.player1;
         } else {
             this.winner = this.player2;
             //console.log("Winner is Player with id "+ this.player2.id);
-            return 2;
+            return this.player2;
         }
     }
 }
