@@ -21,5 +21,15 @@ DatasystemHandler.readPlayersFile(spielstaerkenFileId).then(function(players){
 
     console.log("K.O x 5 Strategie: ");
     new StrategyTesting.KOStrategyTester(players, "random", 5).run(StrategyTestingIterations);
+
+    console.log("============= \n");
+
+    console.log("K.O x 501 Strategie: ");
+    new StrategyTesting.KOStrategyTester(players, "random", 501).run(StrategyTestingIterations);
+
+    console.log("============= \n");
+
+    console.log("K.O x 1001 Strategie: ");
+    new StrategyTesting.KOStrategyTester(players, "random", 1001).run(StrategyTestingIterations);
 });
 
