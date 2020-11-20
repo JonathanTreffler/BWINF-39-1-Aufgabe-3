@@ -41,7 +41,7 @@ class MatchMultipleRounds {
                 this.player2Wins++;
             }
         }
-        console.log(this.player1Wins, this.player2Wins);
+        //console.log(this.player1Wins, this.player2Wins);
 
         if(this.player1Wins === this.player2Wins) {
             console.log("ACHTUNG: Gleichstand im Match; Gerade Rundenzahlen sind nicht empfohlen");

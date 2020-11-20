@@ -1,13 +1,18 @@
-class KOCompetition {
-    constructor(players, CompetitionPlan, roundsPerMatch) {
+Competition = require("./Competition.js");
+
+class KOCompetition extends Competition {
+    constructor(players, CompetitionPlan, roundsPerMatch, silent) {
+        super();
+
         this.players = players;
         this.CompetitionPlan = CompetitionPlan;
         this.roundsPerMatch = parseInt(roundsPerMatch) || 1;
+        this.silent = silent;
 
         this.run();
     }
     run() {
-        console.log(this.players);
+        this.log(this.players);
 
         if(this.CompetitionPlan === "random") {
             this.randomPlan();
@@ -20,9 +25,9 @@ class KOCompetition {
         Helpers.shuffleArray(this.players);
     }
     round(players, roundNumber) {
-        console.log("\n START RUNDE ", roundNumber);
-        console.log("Teilnehmer der Runde:");
-        console.log(players);
+        this.log("\n START RUNDE ", roundNumber);
+        this.log("Teilnehmer der Runde:");
+        this.log(players);
 
         let WinnersInThisRound = [];
         
@@ -35,17 +40,18 @@ class KOCompetition {
             let match = new Match.MatchMultipleRounds(player1, player2, this.roundsPerMatch);
             let matchResult = match.run();
 
-            console.log("Spieler ", player1.id, " gegen ", player2.id);
+            this.log("Spieler ", player1.id, " gegen ", player2.id);
 
             WinnersInThisRound.push(matchResult.winner);
-            console.log("   ==> Spieler ", matchResult.winner.id, " gewinnt (", matchResult.wins, " von ", this.roundsPerMatch, " = ", matchResult.winRatio*100, "% Spiele gewonnen ) \n");
+            this.log("   ==> Spieler ", matchResult.winner.id, " gewinnt (", matchResult.wins, " von ", this.roundsPerMatch, " = ", matchResult.winRatio*100, "% Spiele gewonnen ) \n");
         }
 
-        console.log("Gewinner dieser Runde:")
-        console.log(WinnersInThisRound);
+        this.log("Gewinner dieser Runde:")
+        this.log(WinnersInThisRound);
 
         if(WinnersInThisRound.length === 1) {
-            console.log("** Gesammtgewinner ist Spieler ", WinnersInThisRound[0].id, " **");
+            this.winner = WinnersInThisRound[0];
+            this.log("** Gesammtgewinner ist Spieler ", this.winner.id, " **");
         } else {
             // recursively run next round
             this.round(WinnersInThisRound, roundNumber+1);

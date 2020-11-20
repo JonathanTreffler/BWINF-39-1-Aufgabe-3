@@ -1,10 +1,13 @@
 Match = require("./Match.js");
 Helpers = require("./Helpers.js");
+Competition = require("./Competition.js");
 
-class LigaCompetition {
-    constructor(players) {
+class LigaCompetition extends Competition {
+    constructor(players, silent) {
+        super();
+
         this.players = players;
-        console.log(this.players);
+        this.silent = silent;
 
         this.playerWins = new Map();
 
@@ -12,7 +15,7 @@ class LigaCompetition {
             this.playerWins.set(parseInt(player), 0);
         }
 
-        console.log(this.playerWins);
+        this.log(this.playerWins);
 
         this.run();
     }
@@ -23,7 +26,7 @@ class LigaCompetition {
                 let player1 = this.players[player1Id];
                 let player2 = this.players[player2Id];
                 
-                console.log(player1.id + " gegen " + player2.id);
+                this.log(player1.id + " gegen " + player2.id);
 
                 let match = new Match.DefaultMatch(player1, player2);
                 let matchResult = match.run();
@@ -31,7 +34,7 @@ class LigaCompetition {
                 this.playerWins.set(matchResult.winner.id, this.playerWins.get(matchResult.winner.id) + 1);
             }
         }
-        console.log(this.playerWins);
+        this.log(this.playerWins);
 
         /*  rearrange from:
             Map {
@@ -54,8 +57,11 @@ class LigaCompetition {
             }
             
         });
-        console.log(sortedPlayerWins);
-        console.log("Der Gewinner ist Spieler "+ sortedPlayerWins[0][0] + " mit " + sortedPlayerWins[0][1] + " gewonnenen Spielen");
+        this.log(sortedPlayerWins);
+
+        this.winner = {id: sortedPlayerWins[0][0], wins: sortedPlayerWins[0][1]};
+        
+        this.log("Der Gewinner ist Spieler "+ this.winner.id + " mit " + this.winner.wins + " gewonnenen Spielen");
     }
 }
 
