@@ -5,12 +5,9 @@ var spielstaerkenFileId = 3;
 var StrategyTestingIterations = 100000;
 
 DatasystemHandler.readPlayersFile(spielstaerkenFileId).then(function(players){
-    console.log("players: ")
+    console.log("Spieler: ")
     console.log(players);
 
-    //new LigaCompetition(players);
-    //new KOCompetition(players, "random");
-    //new KOCompetition(players, "random", 5, true);
     console.log("Liga Strategie: ");
     new StrategyTesting.LigaStrategyTester(players).run(StrategyTestingIterations);
 
