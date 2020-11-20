@@ -7,6 +7,7 @@ var StrategyTestingIterations = 100000;
 DatasystemHandler.readPlayersFile(spielstaerkenFileId).then(function(players){
     console.log("Spieler: ")
     console.log(players);
+    console.log("\n");
 
     console.log("Liga Strategie: ");
     new StrategyTesting.LigaStrategyTester(players).run(StrategyTestingIterations);

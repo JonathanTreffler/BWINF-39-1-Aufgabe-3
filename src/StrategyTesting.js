@@ -14,6 +14,15 @@ class StrategyTester {
 
         return sortedPlayers[0];
     }
+    run(iterations) {
+        this.iterations = iterations || 10;
+
+        for(let i = 0; i < this.iterations; i++) {
+            this.iteration();
+        }
+
+        this.result();
+    }
     result() {
         console.log("Der beste Spieler (", this.bestPlayer.id, ") gewann ", this.bestPlayerWon, " von ", this.iterations, " Spiele (",this.bestPlayerWon/this.iterations*100,"%) \n");
     }
@@ -25,17 +34,12 @@ class LigaStrategyTester extends StrategyTester {
 
         this.players = players;
     }
-    run(iterations) {
-        this.iterations = iterations || 10;
+    iteration() {
+        let competition = new LigaCompetition(this.players, true);
 
-        for(let i = 0; i < this.iterations; i++) {
-            let competition = new LigaCompetition(this.players, true);
-            if(competition.winner.id == this.bestPlayer.id) {
-                this.bestPlayerWon++;
-            }
+        if(competition.winner.id == this.bestPlayer.id) {
+            this.bestPlayerWon++;
         }
-
-        super.result();
     }
 }
 
@@ -47,17 +51,12 @@ class KOStrategyTester extends StrategyTester {
         this.CompetitionPlan = CompetitionPlan;
         this.roundsPerMatch = roundsPerMatch;
     }
-    run(iterations) {
-        this.iterations = iterations || 10;
+    iteration() {
+        let competition = new KOCompetition(this.players, this.CompetitionPlan, this.roundsPerMatch, true);
 
-        for(let i = 0; i < this.iterations; i++) {
-            let competition = new KOCompetition(this.players, this.CompetitionPlan, this.roundsPerMatch, true);
-            if(competition.winner.id == this.bestPlayer.id) {
-                this.bestPlayerWon++;
-            }
+        if(competition.winner.id == this.bestPlayer.id) {
+            this.bestPlayerWon++;
         }
-
-        super.result();
     }
 }
 
