@@ -35,13 +35,13 @@ class KOCompetition extends Competition {
         Helpers.shuffleArray(this.players);
     }
     idPlan() {
-        // sort by Id
+        // sort by Id (lowest to highst)
         this.players = this.players.sort(function(firstEl, secondEl) {
             return firstEl.id - secondEl.id;
         });
     }
     ReverseIdPlan() {
-        // sort by Id
+        // sort by Id (highest to lowest)
         this.players = this.players.sort(function(firstEl, secondEl) {
             return secondEl.id - firstEl.id;
         });
