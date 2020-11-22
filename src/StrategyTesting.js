@@ -6,6 +6,7 @@ class StrategyTester {
         this.bestPlayer = this.getBestPlayer(players);
 
         this.bestPlayerWon = 0;
+        this.matchesRun = 0;
     }
     getBestPlayer(players) {
         let sortedPlayers = players.sort(function(firstEl, secondEl) {
@@ -24,7 +25,8 @@ class StrategyTester {
         this.result();
     }
     result() {
-        console.log("Der beste Spieler (", this.bestPlayer.id, ") gewann ", this.bestPlayerWon, " von ", this.iterations, " Spiele (",this.bestPlayerWon/this.iterations*100,"%) \n");
+        console.log("Der beste Spieler (", this.bestPlayer.id, ") gewann ", this.bestPlayerWon, "von", this.iterations, "Spiele (",this.bestPlayerWon/this.iterations*100,"%)");
+        console.log("insgesammt", this.matchesRun, "Spiele simuliert \n");
     }
 }
 
@@ -36,6 +38,7 @@ class LigaStrategyTester extends StrategyTester {
     }
     iteration() {
         let competition = new LigaCompetition(this.players, true);
+        this.matchesRun += competition.matchesRun;
 
         if(competition.winner.id == this.bestPlayer.id) {
             this.bestPlayerWon++;
@@ -53,6 +56,7 @@ class KOStrategyTester extends StrategyTester {
     }
     iteration() {
         let competition = new KOCompetition(this.players, this.CompetitionPlan, this.roundsPerMatch, true);
+        this.matchesRun += competition.matchesRun;
 
         if(competition.winner.id == this.bestPlayer.id) {
             this.bestPlayerWon++;

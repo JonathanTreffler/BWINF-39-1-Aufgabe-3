@@ -9,6 +9,8 @@ class LigaCompetition extends Competition {
         this.players = players;
         this.silent = silent;
 
+        this.matchesRun = 0;
+
         this.playerWins = new Map();
 
         for(let player in players) {
@@ -29,6 +31,7 @@ class LigaCompetition extends Competition {
                 this.log(player1.id + " gegen " + player2.id);
 
                 let match = new Match.DefaultMatch(player1, player2);
+                this.matchesRun++;
                 let matchResult = match.run();
 
                 this.playerWins.set(matchResult.winner.id, this.playerWins.get(matchResult.winner.id) + 1);
